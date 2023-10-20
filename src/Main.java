@@ -5,11 +5,18 @@ import java.util.Scanner;
 public class Main {
     private static String PATH = "inputs/";
 
-    private static String[] warehouses;
+    private static Warehouse[] warehouses;
 
-    private static String[] customers;
+    private static Customer[] customers;
 
-    private static String[] barrows;
+    private static String[] ways;
+
+    private static Barrow[] barrows;
+
+    private static String[] requests;
+
+    private static int indexInFile = 0;
+    private static int index = 0;
 
     private static int sizeOfArray(Scanner sc, String filename) throws IOException {
         /**
@@ -73,76 +80,120 @@ public class Main {
         return data;
     }
 
-    private static void createBarrow(int count, String[] data) {
-        for(int i = 0; i < count; i++) {
-            barrows[i] = data[i + 1];
-        }
-    }
+    private static int[] getIntData(String[] dataFromFile) {
+        String data = dataFromFile[index];
+        String[] splitData = data.split("\\s+");
+        int[] convertedData = new int[splitData.length];
 
-    private static void createCustomer(int count, int index, String[] data) {
-        for(int i = 0; i < count; i++) {
-            customers[i] = data[index + i];
+        for(int j = 0; j < convertedData.length; j ++) {
+            convertedData[j] = Integer.parseInt(splitData[j]);
         }
-    }
 
-    private static void createWarehouse(int count, int index, String[] data) {
-        for(int i = 0; i < count; i++) {
-            warehouses[i] = data[index + i];
-        }
+        return  convertedData;
     }
 
     public static void main(String[] args) throws IOException {
         String fileName = "tutorial.txt";
         Scanner sc = null;
 
-        int currentPosition = 0;
+        int currentPosition, currentCount;
         int count = sizeOfArray(sc, fileName);
-        int currentCount = 0;
-        int indexInFile = 0;
-        int type = 1;
+        int type = index = 1;
+        int array_index = 0;
+        boolean firstIteration = true;
 
         String[] dataFromFile = loadData(sc, fileName);
 
         for (int i = 0; i < count; i++) {
             currentCount = Integer.parseInt(dataFromFile[i]);
             currentPosition = currentCount;
-            indexInFile = i + 1;
 
-            //TODO - udelat to po jednolivy radce
-
-            while (currentPosition != 0) {
+            while(currentPosition != 0) {
                 switch (type) {
                     case 1:
-                        warehouses = new String[currentCount];
-                        createWarehouse(currentCount, indexInFile, dataFromFile);
+                        if (firstIteration) {
+                            warehouses = new Warehouse[currentCount];
+                        }
+
+                        int[] warehouseData = getIntData(dataFromFile);
+
+                        warehouses[array_index] = new Warehouse(warehouseData[0], warehouseData[1], warehouseData[2], warehouseData[3], warehouseData[4]);
                         break;
 
                     case 2:
-                        customers = new String[currentCount];
-                        createCustomer(currentCount, indexInFile, dataFromFile);
+                        if (firstIteration) {
+                            customers = new Customer[currentCount];
+                        }
+
+                        int[] customerData = getIntData(dataFromFile);
+
+                        customers[array_index] = new Customer(0, customerData[0], customerData[1]);
+                        break;
+
+                    case 3:
+                        if (firstIteration) {
+                            ways = new String[currentCount];
+                        }
+
+                        ways[array_index] = dataFromFile[index];
+                        break;
+
+                    case 4:
+                        if (firstIteration) {
+                            barrows = new Barrow[currentCount];
+                        }
+
+                        int[] barrowData = getIntData(dataFromFile);
+
+                        //TODO - upravit vytvoreni objektu, jako prvni argument se dava String
+                        //barrows[array_index] = new Barrow(barrowData[0], barrowData[1], barrowData[2], barrowData[3], barrowData[4], barrowData[5], barrowData[6], barrowData[7]);
+                        break;
+
+                    case 5:
+                        if (firstIteration) {
+                            requests = new String[currentCount];
+                        }
+
+                        requests[array_index] = dataFromFile[index];
                         break;
                 }
 
+                array_index ++;
+                index ++;
                 currentPosition --;
-                indexInFile ++;
+                firstIteration = false;
             }
 
             type ++;
-            indexInFile = 0;
             i += currentCount;
+            index ++;
+            array_index = 0;
+            firstIteration = true;
         }
 
-        for(String data : warehouses) {
-            System.out.println("Kolecko: " + data);
-        }
-
-        for(String data : customers) {
-            System.out.println(data);
+        System.out.println("Sklady: ");
+        for(Warehouse data : warehouses) {
+            System.out.println(data.toString());
         }
 //
+//        System.out.println("Cesty: ");
+//        for(String data : ways) {
+//            System.out.println(data);
+//        }
+//
+//        System.out.println("Zakaznici: ");
+//        for(String data : customers) {
+//            System.out.println(data);
+//        }
+//
+//        System.out.println("Kolecka: ");
 //        for(String data : barrows) {
 //            System.out.println(data);
 //        }
-
+//
+//        System.out.println("Pozadavky: ");
+//        for(String data : requests) {
+//            System.out.println(data);
+//        }
     }
 }
