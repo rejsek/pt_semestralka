@@ -1,11 +1,14 @@
 public class Warehouse {
+
+    private int id;
     private int x, y;
     private int bagCount;
     private int restockTime;
     private int loadTime;
 
 
-    public Warehouse(int x, int y, int bagCount, int restockTime, int loadTime) {
+    public Warehouse(int id, int x, int y, int bagCount, int restockTime, int loadTime) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.bagCount = bagCount;
@@ -13,6 +16,9 @@ public class Warehouse {
         this.loadTime = loadTime;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public void setX(int x) {
         this.x = x;
     }
@@ -31,6 +37,10 @@ public class Warehouse {
 
     public void setLoadTime(int loadTime) {
         this.loadTime = loadTime;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getX() {
@@ -56,7 +66,8 @@ public class Warehouse {
     @Override
     public String toString() {
         return "Warehouse{" +
-                "x=" + x +
+                "id=" + id +
+                ", x=" + x +
                 ", y=" + y +
                 ", bagCount=" + bagCount +
                 ", restockTime=" + restockTime +

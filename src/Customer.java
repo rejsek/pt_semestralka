@@ -16,6 +16,10 @@ public class Customer {
         this.y = y;
     }
 
+
+    public int getId() {
+        return id;
+    }
     public int getX() {
         return x;
     }
