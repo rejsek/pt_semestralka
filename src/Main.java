@@ -100,7 +100,6 @@ public class Main {
 
         int size = sizeOfArray(sc, filename);
         int position = 0;
-        int comment = 0;    //citac, zda jsem v komentari
         String[] data = new String[size];
         String current = "";
 
@@ -510,6 +509,7 @@ public class Main {
         printArrays();
 
         g.initialize(z);
+        //g.initialize(ways.length);
 
         barrows = new Barrow[10];
         for(int i = 0; i < barrows.length; i ++) {
@@ -549,6 +549,6 @@ public class Main {
 
         // System.out.println(g.shortestPathLength(warehouses[0], customers[3]));
 
-        realizeRequests(g);
+         realizeRequests(g);
     }
 }
