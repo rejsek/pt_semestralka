@@ -1,18 +1,36 @@
-public class Customer {
+/**
+ * Trida reprezentujici zakaznika
+ */
+public class Customer implements IGraph {
+    /**
+     * id zakaznika
+     */
     private int id;
-    private int x, y;
 
-    public Customer(int id, int x, int y) {
+    /**
+     * x a y souradnice zakaznika
+     */
+    private double x, y;
+
+    public Customer(int id, double x, double y) {
+        /**
+         * Konstruktor
+         *
+         * @param id    id zakaznika
+         * @param x     x souradnice
+         * @param y     y souradnice
+         */
+
         this.id = id;
         this.x = x;
         this.y = y;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
@@ -20,12 +38,17 @@ public class Customer {
     public int getId() {
         return id;
     }
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
+    }
+
+    @Override
+    public boolean isWarehouse() {
+        return false;
     }
 
     @Override

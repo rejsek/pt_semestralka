@@ -1,4 +1,6 @@
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**
@@ -21,12 +23,46 @@ class Graph {
      * @param start cislo pocatecniho vrcholu
      * @param end cislo koncoveho vrcholu
      */
-    public void addEdge(int start, int end) {
-        Link n1 = new Link(end, edges[start]);
-        edges[start] = n1;
-        Link n2 = new Link(start, edges[end]);
-        edges[end] = n2;
+    public void addEdge(IGraph start, IGraph end, double edgeWeight) {
+        int idStart = start.getId() - 1;
+        int idEnd = end.getId() - 1;
+
+        Link n1 = new Link(end, edges[idStart], edgeWeight);
+        edges[idStart] = n1;
+        Link n2 = new Link(start, edges[idEnd], edgeWeight);
+        edges[idEnd] = n2;
     }
+
+    public double shortestPathLengthE(IGraph start, IGraph end) {
+        int vertexCount = edges.length;
+        double[] distances = new double[vertexCount];
+        Arrays.fill(distances, Double.MAX_VALUE);
+        int startId = start.getId() - 1;
+        int endId = end.getId() - 1;
+        distances[startId] = 0;
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>((v1, v2) -> Double.compare( distances[v1],  distances[v2]));
+        pq.add(startId);
+
+        while (!pq.isEmpty()) {
+            int current = pq.poll();
+            Link l = edges[current];
+
+            while (l != null) {
+                double newDistance = distances[current] + l.edgeWeight;
+
+                if (newDistance < distances[l.neighbour.getId() - 1]) {
+                    distances[l.neighbour.getId() - 1] = newDistance;
+                    pq.add(l.neighbour.getId() - 1);
+                }
+
+                l = l.next;
+            }
+        }
+
+        return distances[endId];
+    }
+
 
     /**
      * Vrati delku nejkratsi cesty mezi vrcholy start a end
@@ -34,31 +70,41 @@ class Graph {
      * @param end koncovy vrchol
      * @return delka nejkratsi cesty
      */
-    public int shortestPathLength(int start, int end) {
-        Queue<Integer> q = new LinkedList<Integer>();
-        int[] states = new int[edges.length];
-        int[] distances = new int[edges.length];
+    public int shortestPathLength(IGraph start, IGraph end) {
+        int vertexCount = edges.length;
+        int[] distances = new int[vertexCount];
+        Arrays.fill(distances, Integer.MAX_VALUE);
+        int startId = start.getId() - 1;
+        int endId = end.getId() - 1;
+        distances[startId] = 0;
 
-        q.add(start);
+        PriorityQueue<Integer> pq = new PriorityQueue<>((v1, v2) -> Integer.compare(distances[v1], distances[v2]));
+        pq.add(startId);
 
-        while(!q.isEmpty()) {
-            int current = q.poll();
+        while (!pq.isEmpty()) {
+            int current = pq.poll();
             Link l = edges[current];
 
-            while(l != null) {
-                if(states[l.neighbour] == 0) {
-                    states[l.neighbour] = 1;
-                    distances[l.neighbour] = distances[current] + 1;
+            while (l != null) {
+                int newDistance = distances[current] + 1;
 
-                    q.add(l.neighbour);
+                if (newDistance < distances[l.neighbour.getId() - 1]) {
+                    distances[l.neighbour.getId() - 1] = newDistance;
+                    pq.add(l.neighbour.getId() - 1);
                 }
 
                 l = l.next;
             }
-
-            states[current] = 2;
         }
 
-        return distances[end];
+        return distances[endId];
+    }
+
+    public Link[] getEdges(){
+        /**
+         * Vrati hrany grafu
+         */
+
+        return edges;
     }
 }

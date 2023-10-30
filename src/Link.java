@@ -2,9 +2,19 @@
  * Prvek spojoveho seznamu pro ulozeni sousedu vrcholu grafu
  */
 class Link {
-    /** Cislo souseda */
-    int neighbour;
-    /** Odkaz na dalsiho souseda */
+    /**
+     * Soused
+    */
+    IGraph neighbour;
+
+    /**
+     * Ohodnoceni hrany
+     */
+    double edgeWeight;
+
+    /**
+     * Odkaz na dalsiho souseda
+    */
     Link next;
 
     /**
@@ -12,8 +22,9 @@ class Link {
      * @param n cislo souseda
      * @param next odkaz na dalsiho souseda
      */
-    public Link(int n, Link next) {
-        neighbour = n;
+    public Link(IGraph n, Link next, double edgeWeight) {
+        this.neighbour = n;
         this.next = next;
+        this.edgeWeight = edgeWeight;
     }
 }

@@ -1,13 +1,44 @@
-public class Warehouse {
+/**
+ * Trida reprezentujici sklad
+ */
+public class Warehouse implements IGraph {
+    /**
+     * id skladu
+     */
+    int id;
 
-    private int id;
-    private int x, y;
-    private int bagCount;
-    private int restockTime;
-    private int loadTime;
+    /**
+     * x a y souradnice skladu
+     */
+    private double x, y;
 
+    /**
+     *
+     */
+    private double bagCount;
 
-    public Warehouse(int id, int x, int y, int bagCount, int restockTime, int loadTime) {
+    /**
+     *
+     */
+    private double restockTime;
+
+    /**
+     *
+     */
+    private double loadTime;
+
+    public Warehouse(int id, double x, double y, double bagCount, double restockTime, double loadTime) {
+        /**
+         * Konstruktor
+         *
+         * @param id            id skladu
+         * @param x             x souradnice
+         * @param y             y souradnice
+         * @param bagCount
+         * @param restockTime
+         * @param loadTime
+         */
+
         this.id = id;
         this.x = x;
         this.y = y;
@@ -19,23 +50,23 @@ public class Warehouse {
     public void setId(int id) {
         this.id = id;
     }
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public void setBagCount(int bagCount) {
+    public void setBagCount(double bagCount) {
         this.bagCount = bagCount;
     }
 
-    public void setRestockTime(int restockTime) {
+    public void setRestockTime(double restockTime) {
         this.restockTime = restockTime;
     }
 
-    public void setLoadTime(int loadTime) {
+    public void setLoadTime(double loadTime) {
         this.loadTime = loadTime;
     }
 
@@ -43,24 +74,28 @@ public class Warehouse {
         return id;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public int getBagCount() {
+    public double getBagCount() {
         return bagCount;
     }
 
-    public int getRestockTime() {
+    public double getRestockTime() {
         return restockTime;
     }
 
-    public int getLoadTime() {
+    public double getLoadTime() {
         return loadTime;
+    }
+
+    public boolean isWarehouse() {
+        return true;
     }
 
     @Override
